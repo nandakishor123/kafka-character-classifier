@@ -5,12 +5,22 @@ spring:
   application:
     name: worker-service
 
+  datasource:
+    # Shared H2 server (docker-compose), so every worker instance writes to the same DB.
+    url: jdbc:h2:tcp://localhost:9092/./analysis
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
   kafka:
     bootstrap-servers: localhost:29092
     consumer:
       group-id: analysis-workers
       auto-offset-reset: earliest
-      # We commit offsets ourselves, only after a record has been processed.
+      # We commit offsets ourselves, only after the DB write succeeded.
       enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       # Wraps the JSON deserializer so a malformed payload becomes an error we can route
