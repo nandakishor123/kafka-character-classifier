@@ -11,16 +11,12 @@ public class InputClassifier {
     private static final Pattern WORD = Pattern.compile("[A-Za-z]+");
 
     public InputType classify(String input) {
-        InputType type = null;
-        try {
-            if (NUMBER.matcher(input).matches()) {
-                type = InputType.NUMBER;
-            } else if (WORD.matcher(input).matches()) {
-                type = InputType.WORD;
-            }
-        } catch (Exception e) {
-            throw new UnsupportedInputException(input);
+        if (NUMBER.matcher(input).matches()) {
+           return InputType.NUMBER;
+        } else if (WORD.matcher(input).matches()) {
+           return InputType.WORD;
+        } else {
+            throw new UnsupportedInputException("Unsupported input: " + input);
         }
-        return type;
     }
 }
