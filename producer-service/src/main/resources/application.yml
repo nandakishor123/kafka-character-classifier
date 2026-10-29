@@ -1,0 +1,16 @@
+server:
+  port: ${PORT:8081}
+
+spring:
+  application:
+    name: producer-service
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        # Consumers bind JSON to their own class, so don't leak our class name in headers.
+        spring.json.add.type.headers: false
