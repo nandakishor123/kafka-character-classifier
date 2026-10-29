@@ -27,7 +27,7 @@ jobs:
 
       - name: Report test results
         if: ${{ !cancelled() }}
-        uses: mikepenz/action-junit-report@v5
+        uses: mikepenz/action-junit-report@v6
         with:
           report_paths: '**/target/surefire-reports/TEST-*.xml'
           check_name: Unit test results
